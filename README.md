@@ -69,3 +69,19 @@ Or you can set default profile in environment variable:
     ```powershell
     [System.Environment]::SetEnvironmentVariable("AWS_PROFILE", "mfa", "User")
     ```
+
+## In conclusion...
+
+If you are Windows user, I recommend you to install [Grep for Windows](http://gnuwin32.sourceforge.net/packages/grep.htm).
+
+It will help you filter incoming data from kubernetes.
+
+For example the next command:
+
+```cmd
+kubectl get pods --watch=true | grep user-idetification-svc
+```
+
+will stream pods updates only for `user-idetification` serivce, which is quite helpful.
+
+NOTE: this works only in `cmd` or `Git Bash` shells, `powershell` works with pipes a bit differently.
