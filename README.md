@@ -23,13 +23,11 @@ The script assumes, that your user is created in `IAM` and has enabled `MFA`.
 ## Installation
 
 1. Scripts requires `jq` tool to be isntalled.
-    * bash/apt
-        ```bash
-        apt install jq
-        ```
-    * win
 
-        Download binary file and place it into any `PATH` folder: https://stedolan.github.io/jq/download/
+    Download [binary](https://stedolan.github.io/jq/download/) file and place it into any `PATH` folder.
+
+    Or use any package manager you want (apt, snap, chocolatey, etc.).
+
 1. Copy script file to any `Path` folder
 1. Define `AWS_MFA_SERIAL_NUMBER` environment variable with value like `arn:aws:iam::1234567890123:mfa/kuser`.
 
@@ -37,7 +35,7 @@ The script assumes, that your user is created in `IAM` and has enabled `MFA`.
 
 ## Usage
 
-1. Open terminal and run the script.
+1. Open terminal/console and run the script.
 1. Provide MFA Identifier, if you did not define `AWS_MFA_SERIAL_NUMBER` environment variable.
 1. Provide MFA Verification code from your MFA device.
 
