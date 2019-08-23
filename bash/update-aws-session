@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Help functions
+
+err() {
+    printf "%s\n" "$*" >&2;
+}
+
+# Verify jq is installed
+
+jq --version  &> /dev/null
+
+if [ $? -ne 0 ]; then
+    err "Please, install jq for parsing json"
+    exit 10
+fi
+
+# Main
+
+serialNumber=$AWS_MFA_SERIAL_NUMBER
+
+if [[ -z $serialNumber ]]
+then
+echo "Please, provide your MFA serial number"
+echo "You can define AWS_MFA_SERIAL_NUMBER environment variable in order not to input the value over and over"
+echo "Example: arn:aws:iam::1234567890123:mfa/kuser"
+read -p "MFA Serial Number: " serialNumber
+export AWS_MFA_SERIAL_NUMBER=$serialNumber
+fi
+
+echo "MFS Serial Number: $serialNumber"
+
+read -p "Enter MFA Verification Code: " tokenCode
+
+result=$(aws sts get-session-token --serial-number $serialNumber --token-code $tokenCode)
+
+if [ $? -ne 0 ]; then
+    err "Can't retrive session keys from AWS using provided values. Please, check the values and try again."
+    exit 42
+fi
+
+AWS_ACCESS_KEY_ID=$(echo $result | jq  -r ".Credentials.AccessKeyId")
+AWS_SECRET_ACCESS_KEY=$(echo $result | jq -r ".Credentials.SecretAccessKey")
+AWS_SESSION_TOKEN=$(echo $result | jq -r ".Credentials.SessionToken")
+expirationDate=$(echo $result | jq -r ".Credentials.Expiration")
+
+profileName=mfa
+sudo aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile $profileName
+sudo aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile $profileName
+sudo aws configure set aws_session_token $AWS_SESSION_TOKEN --profile $profileName
+
+echo "Session will expire after $expirationDate for AWS Profile <$profileName>"
