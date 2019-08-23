@@ -10,6 +10,8 @@ The script assumes, that your user is created in `IAM` and has enabled `MFA`.
 
 ## Preparations
 
+1. Install `aws` cli.
+1. Install `aws-iam-authenticator` tool.
 1. It is assumed, that you already have `<homefolder>/.aws/credentials` file with `default` profile.
 
     The `default` profile must contain your `Access` and `Secret`  keys, generated with AWS Console web app.
@@ -20,13 +22,13 @@ The script assumes, that your user is created in `IAM` and has enabled `MFA`.
     aws_secret_access_key = asdfsar123123ASD131zxsas1123szfdasddsf32
     ```
 
-## Installation
-
 1. Scripts requires `jq` tool to be isntalled.
 
     Download [binary](https://stedolan.github.io/jq/download/) file and place it into any `PATH` folder.
 
     Or use any package manager you want (apt, snap, chocolatey, etc.).
+
+## Installation
 
 1. Copy script file to any `Path` folder
 1. Define `AWS_MFA_SERIAL_NUMBER` environment variable with value like `arn:aws:iam::1234567890123:mfa/kuser`.
