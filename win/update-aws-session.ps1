@@ -44,8 +44,8 @@ $AWS_SESSION_TOKEN=$($result | jq -r ".Credentials.SessionToken")
 $expirationDate=$($result | jq -r ".Credentials.Expiration")
 
 $profileName="mfa"
-Start-Process powershell -Verb runAs -ArgumentList "-Command '& aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile $profileName'"
-Start-Process powershell -Verb runAs -ArgumentList "-Command '& aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile $profileName'"
-Start-Process powershell -Verb runAs -ArgumentList "-Command '& aws configure set aws_session_token $AWS_SESSION_TOKEN --profile $profileName'"
+& aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile $profileName
+& aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile $profileName
+& aws configure set aws_session_token $AWS_SESSION_TOKEN --profile $profileName
 
 Write-Output "Session will expire after $expirationDate for AWS Profile <$profileName>"
