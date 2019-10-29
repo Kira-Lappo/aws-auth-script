@@ -38,6 +38,9 @@ The script assumes, that your user is created in `IAM` and has enabled `MFA`.
 ## Usage
 
 1. Open terminal/console and run the script.
+
+    **NOTE: The script must be run with administrator rights.**
+    
 1. Provide MFA Identifier, if you did not define `AWS_MFA_SERIAL_NUMBER` environment variable.
 1. Provide MFA Verification code from your MFA device.
 
