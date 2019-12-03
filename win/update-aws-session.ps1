@@ -32,7 +32,7 @@ Write-Output "MFS Serial Number: $serialNumber"
 
 $tokenCode = Read-Host "Enter MFA Verification Code: "
 
-$result=$(aws sts get-session-token --serial-number $serialNumber --token-code $tokenCode)
+$result=$(aws sts get-session-token --serial-number $serialNumber --token-code $tokenCode --profile default)
 
 if ( $LASTEXITCODE -ne 0 ) {
     err "Can't retrive session keys from AWS using provided values. Please, check the values and try again."
